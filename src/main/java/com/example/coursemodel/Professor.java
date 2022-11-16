@@ -14,8 +14,8 @@ public class Professor {
     private String telephone;
     private Float payment;
 
-//    @ManyToMany(mappedBy = "professors")
-//    Set<Course> courses;
+    @ManyToMany(mappedBy = "professors")
+    Set<Course> courses;
 
     public Professor() {
 

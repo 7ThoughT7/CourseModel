@@ -8,7 +8,7 @@ public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer studentId;
+    private Integer id;
     private String name;
     private String address;
     private String telephone;
@@ -34,12 +34,22 @@ public class Student {
         this.countingNum = countingNum;
     }
 
-    public void maybeSignUp() {}
+    public void maybeSignUp() {
+
+    }
 
     public void getListOfListedCourses() {}
 
+    public Set<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(Course course) {
+        courses.add(course);
+    }
+
     public Integer getId() {
-        return studentId;
+        return id;
     }
 
     public String getName() {

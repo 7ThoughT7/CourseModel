@@ -16,22 +16,22 @@ public class CourseController {
     @Autowired
     private CourseRepo courseRepo;
 
-    @GetMapping("/listCourses")
+    @GetMapping("/add/addCourses")
     public String courses(Map<String, Object> model) {
 
         Iterable<Course> courses = courseRepo.findAll();
         model.put("courses", courses);
 
-        return "listCourses";
+        return "add/addCourses";
     }
 
-    @PostMapping("/listCourses")
+    @PostMapping("/add/addCourses")
     public String addCourse(@RequestParam String title, @RequestParam int number,
                             @RequestParam float price) {
 
         Course course = new Course(title, number, price);
         courseRepo.save(course);
 
-        return "redirect:/listCourses";
+        return "redirect:/add/addCourses";
     }
 }

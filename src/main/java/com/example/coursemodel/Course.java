@@ -8,7 +8,7 @@ public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer courseId;
+    private Integer id;
     private String title;
     private int number;
     private float price;
@@ -24,12 +24,12 @@ public class Course {
             inverseJoinColumns = @JoinColumn(name = "studentId"))
     private Set<Student> students;
 
-//    @ManyToMany
-//    @JoinTable(
-//            name = "course_professor",
-//            joinColumns = @JoinColumn(name = "courseId"),
-//            inverseJoinColumns = @JoinColumn(name = "professorId"))
-//    private Set<Professor> professors;
+    @ManyToMany
+    @JoinTable(
+            name = "course_professor",
+            joinColumns = @JoinColumn(name = "courseId"),
+            inverseJoinColumns = @JoinColumn(name = "professorId"))
+    private Set<Professor> professors;
 
     public Course() {
     }
@@ -48,8 +48,16 @@ public class Course {
 
     }
 
+    public Set<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Student student) {
+        students.add(student);
+    }
+
     public Integer getId() {
-        return courseId;
+        return id;
     }
 
     public String getTitle() {
@@ -74,5 +82,10 @@ public class Course {
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return title;
     }
 }

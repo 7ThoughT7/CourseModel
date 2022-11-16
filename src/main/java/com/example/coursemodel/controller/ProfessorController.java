@@ -16,22 +16,22 @@ public class ProfessorController {
     @Autowired
     private ProfessorRepo professorRepo;
 
-    @GetMapping("/listProfessors")
+    @GetMapping("/add/addProfessors")
     public String professors(Map<String, Object> model) {
 
         Iterable<Professor> professors = professorRepo.findAll();
         model.put("professors", professors);
 
-        return "listProfessors";
+        return "add/addProfessors";
     }
 
-    @PostMapping("/listProfessors")
+    @PostMapping("/add/addProfessors")
     public String addProfessor(@RequestParam String name, @RequestParam String address,
                                @RequestParam String telephone, @RequestParam float payment) {
 
         Professor professor = new Professor(name, address, telephone, payment);
         professorRepo.save(professor);
 
-        return "redirect:/listProfessors";
+        return "redirect:/add/addProfessors";
     }
 }
