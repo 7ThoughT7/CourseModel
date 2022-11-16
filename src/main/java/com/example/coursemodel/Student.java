@@ -100,4 +100,8 @@ public class Student {
         this.averagePerform = averagePerform;
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
 }

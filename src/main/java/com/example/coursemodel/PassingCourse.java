@@ -1,8 +1,6 @@
 package com.example.coursemodel;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,9 +15,9 @@ public class PassingCourse {
     @JoinColumn(name = "studentId")
     private Student students;
 
-//    @OneToMany(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "courseId")
-//    private Set<Course> courses;
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "courseId")
+    private Set<Course> courses;
 
 
     public PassingCourse() {

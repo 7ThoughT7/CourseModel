@@ -15,16 +15,28 @@
         </form>
     </div>
     <div>Список профессоров:</div>
-
-    <#list professors as professor>
-        <div>
-            <b>${professor.name}</b>
-            <i>${professor.address}</i>
-            <i>${professor.telephone}</i>
-            <i>${professor.payment}</i>
-        </div>
-    <#else>
-        Нет профессоров
-    </#list>
-
+    <p></p>
+    <table>
+        <thead>
+        <tr>
+            <th>Имя</th>
+            <th>Адрес</th>
+            <th>Телефон</th>
+            <th>Оплата</th>
+        </tr>
+        </thead>
+        <p></p>
+        <tbody>
+        <#list professors as professor>
+            <tr>
+                <td><b>${professor.name}</b></td>
+                <td><i>${professor.address}</i></td>
+                <td><i>${professor.telephone}</i></td>
+                <td><i>${professor.payment}</i></td>
+            </tr>
+        <#else>
+            Нет профессоров
+        </#list>
+        </tbody>
+    </table>
 </@c.page>

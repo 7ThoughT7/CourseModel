@@ -8,7 +8,7 @@ public class Professor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer professorId;
+    private Integer id;
     private String name;
     private String address;
     private String telephone;
@@ -28,8 +28,16 @@ public class Professor {
         this.payment = payment;
     }
 
+    public Set<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(Course course) {
+        courses.add(course);
+    }
+
     public Integer getId() {
-        return professorId;
+        return id;
     }
 
     public String getName() {
@@ -62,5 +70,10 @@ public class Professor {
 
     public void setPayment(Float payment) {
         this.payment = payment;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

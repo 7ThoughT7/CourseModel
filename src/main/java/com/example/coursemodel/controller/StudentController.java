@@ -44,10 +44,10 @@ public class StudentController {
         return "redirect:/add/addStudents";
     }
 
-    @GetMapping("/listStudents")
+    @GetMapping("/list/listStudents")
     public String listStudents(Model model) {
         model.addAttribute("students", studentRepo.findAll());
-        return "/listStudents";
+        return "/list/listStudents";
     }
 
     @GetMapping("edit/studentEdit/{studentId}")

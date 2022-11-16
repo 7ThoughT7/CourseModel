@@ -4,6 +4,7 @@
     <div>
         <p><a href="/main">НА ГЛАВНУЮ</a></p>
     </div>
+    <p></p>
     <div>
         <form method="post">
             <input type="text" name="name" placeholder="Имя" />
@@ -15,17 +16,32 @@
         </form>
     </div>
     <div>Список студентов:</div>
+    <p></p>
+    <table>
+        <thead>
+        <tr>
+            <th>Имя</th>
+            <th>Адрес</th>
+            <th>Телефон</th>
+            <th>Email</th>
+            <th>Номер зачетки</th>
+        </tr>
+        </thead>
+        <p></p>
+        <tbody>
+        <#list students as student>
+            <tr>
+                <td><b>${student.name}</b></td>
+                <td><i>${student.address}</i></td>
+                <td><i>${student.telephone}</i></td>
+                <td><i>${student.email}</i></td>
+                <td><i>${student.countingNum}</i></td>
+            </tr>
+        <#else>
+            Нет студентов
+        </#list>
+        </tbody>
+    </table>
 
-    <#list students as student>
-        <div>
-            <b>${student.name}</b>
-            <i>${student.address}</i>
-            <i>${student.telephone}</i>
-            <i>${student.email}</i>
-            <i>${student.countingNum}</i>
-        </div>
-    <#else>
-        Нет студентов
-    </#list>
 
 </@c.page>

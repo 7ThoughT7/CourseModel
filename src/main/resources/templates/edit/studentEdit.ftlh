@@ -3,6 +3,7 @@
 <@c.page>
     <div>
         <p><a href="/main">НА ГЛАВНУЮ</a></p>
+        <p><a href="/list/listStudents">К СПИСКУ СТУДЕНТОВ</a></p>
     </div>
     Запись студентов на курсы
     <p></p>
@@ -15,17 +16,16 @@
         </thead>
         <tbody>
         <td>${student.name}</td>
-
         <td><#if student.courses??>
                 <#list student.courses as course>
                     ${course.toString()!}<#sep>,
                 </#list>
             <#else>
-                Empty
+                -
             </#if></td>
         </tbody>
     </table>
-
+    <p></p>
     <table>
         <thead>
         <tr>
