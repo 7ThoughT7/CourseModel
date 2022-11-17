@@ -12,6 +12,7 @@
             <th>Имя профессора</th>
             <th>Ведет курсы</th>
             <th></th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -26,6 +27,7 @@
                         -
                     </#if></td>
                 <td><a href="/edit/professorEdit/${professor.id}">Взять курс</a></td>
+                <td><a href="/delete/professorDelete/${professor.id}">Уволиться с курса</a></td>
             </tr>
         </#list>
         </tbody>

@@ -69,4 +69,25 @@ public class ProfessorController {
 
         return "redirect:/edit/professorEdit/{professorId}";
     }
+
+    @GetMapping("/delete/professorDelete/{professorId}")
+    public String professorDeleteForm(Model model, @PathVariable Integer professorId) {
+        model.addAttribute("professor", professorRepo.getById(professorId));
+        model.addAttribute("courses", courseRepo.findAll());
+        return "delete/professorDelete";
+    }
+
+    @PostMapping("/delete/professorDelete/{professorId}")
+    public String professorDelete(@PathVariable Integer professorId,
+                               @RequestParam Integer courseId
+    ) {
+        Professor professor = professorRepo.getById(professorId);
+        Course course = courseRepo.getById(courseId);
+        professor.getCourses().remove(course);
+        course.getProfessors().remove(professor);
+        professorRepo.save(professor);
+        courseRepo.save(course);
+
+        return "redirect:/delete/professorDelete/{professorId}";
+    }
 }

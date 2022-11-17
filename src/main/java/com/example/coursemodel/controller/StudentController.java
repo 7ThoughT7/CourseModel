@@ -7,10 +7,7 @@ import com.example.coursemodel.repos.StudentRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -63,11 +60,30 @@ public class StudentController {
     ) {
         Student student = studentRepo.getById(studentId);
         Course course = courseRepo.getById(courseId);
-        student.setCourses(course);
-        course.setStudents(student);
+        course.addStudent(student, course);
         studentRepo.save(student);
         courseRepo.save(course);
 
         return "redirect:/edit/studentEdit/{studentId}";
+    }
+
+    @GetMapping("/delete/studentDelete/{studentId}")
+    public String userDeleteForm(Model model, @PathVariable Integer studentId) {
+        model.addAttribute("student", studentRepo.getById(studentId));
+        model.addAttribute("courses", courseRepo.findAll());
+        return "delete/studentDelete";
+    }
+
+    @PostMapping("/delete/studentDelete/{studentId}")
+    public String studentDelete(@PathVariable Integer studentId,
+                                @RequestParam Integer courseId
+    ) {
+        Student student = studentRepo.getById(studentId);
+        Course course = courseRepo.getById(courseId);
+        course.deleteStudent(student, course);
+        studentRepo.save(student);
+        courseRepo.save(course);
+
+        return "redirect:/delete/studentDelete/{studentId}";
     }
 }

@@ -13,6 +13,9 @@
             <th>Профессор</th>
             <th>Студенты</th>
             <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -33,7 +36,10 @@
                     <#else>
                         -
                     </#if></td>
-                <td><a href="/edit/courseEdit/${course.id}">Добавить</a> </td>
+                <td><a href="/edit/courseEditStudent/${course.id}">Добавить студента</a> </td>
+                <td><a href="/delete/courseDeleteStudent/${course.id}">Удалить студента</a> </td>
+                <td><a href="/edit/courseEditProfessor/${course.id}">Добавить профессора</a> </td>
+                <td><a href="/delete/courseDeleteProfessor/${course.id}">Удалить профессора</a> </td>
             </tr>
         </#list>
         </tbody>

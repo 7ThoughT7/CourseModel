@@ -1,8 +1,10 @@
 package com.example.coursemodel.controller;
 
 import com.example.coursemodel.Course;
+import com.example.coursemodel.Professor;
 import com.example.coursemodel.Student;
 import com.example.coursemodel.repos.CourseRepo;
+import com.example.coursemodel.repos.ProfessorRepo;
 import com.example.coursemodel.repos.StudentRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,9 @@ public class CourseController {
 
     @Autowired
     private StudentRepo studentRepo;
+
+    @Autowired
+    private ProfessorRepo professorRepo;
 
     @GetMapping("/add/addCourses")
     public String courses(Map<String, Object> model) {
@@ -48,24 +53,85 @@ public class CourseController {
         return "/list/listCourses";
     }
 
-    @GetMapping("edit/courseEdit/{courseId}")
-    public String courseEditForm(Model model, @PathVariable Integer courseId) {
+    @GetMapping("edit/courseEditStudent/{courseId}")
+    public String courseEditStudent(Model model, @PathVariable Integer courseId) {
         model.addAttribute("course", courseRepo.getById(courseId));
         model.addAttribute("students", studentRepo.findAll());
-        return "edit/courseEdit";
+        return "edit/courseEditStudent";
     }
 
-    @PostMapping("/edit/courseEdit/{courseId}")
-    public String courseSave(@PathVariable Integer courseId,
+    @PostMapping("/edit/courseEditStudent/{courseId}")
+    public String courseSaveStudent(@PathVariable Integer courseId,
                               @RequestParam Integer studentId
     ) {
         Student student = studentRepo.getById(studentId);
         Course course = courseRepo.getById(courseId);
-        student.setCourses(course);
-        course.setStudents(student);
+        course.addStudent(student, course);
         studentRepo.save(student);
         courseRepo.save(course);
 
-        return "redirect:/edit/courseEdit/{courseId}";
+        return "redirect:/edit/courseEditStudent/{courseId}";
+    }
+
+    @GetMapping("/delete/courseDeleteStudent/{courseId}")
+    public String courseDeleteFormSt(Model model, @PathVariable Integer courseId) {
+        model.addAttribute("course", courseRepo.getById(courseId));
+        model.addAttribute("students", studentRepo.findAll());
+        return "delete/courseDeleteStudent";
+    }
+
+    @PostMapping("/delete/courseDeleteStudent/{courseId}")
+    public String courseDeleteStudent(@PathVariable Integer courseId,
+                                @RequestParam Integer studentId
+    ) {
+        Student student = studentRepo.getById(studentId);
+        Course course = courseRepo.getById(courseId);
+        course.deleteStudent(student, course);
+        studentRepo.save(student);
+        courseRepo.save(course);
+
+        return "redirect:/delete/courseDeleteStudent/{courseId}";
+    }
+
+    @GetMapping("edit/courseEditProfessor/{courseId}")
+    public String courseEditForm(Model model, @PathVariable Integer courseId) {
+        model.addAttribute("course", courseRepo.getById(courseId));
+        model.addAttribute("professors", professorRepo.findAll());
+        return "edit/courseEditProfessor";
+    }
+
+    @PostMapping("/edit/courseEditProfessor/{courseId}")
+    public String courseSaveProfessor(@PathVariable Integer courseId,
+                             @RequestParam Integer professorId
+    ) {
+        Course course = courseRepo.getById(courseId);
+        Professor professor = professorRepo.getById(professorId);
+        course.setProfessors(professor);
+        professor.setCourses(course);
+        courseRepo.save(course);
+        professorRepo.save(professor);
+
+        return "redirect:/edit/courseEditProfessor/{courseId}";
+    }
+
+    @GetMapping("/delete/courseDeleteProfessor/{courseId}")
+    public String courseDeleteFormPr(Model model, @PathVariable Integer courseId) {
+        model.addAttribute("course", courseRepo.getById(courseId));
+        model.addAttribute("professors", professorRepo.findAll());
+        return "delete/courseDeleteProfessor";
+    }
+
+    @PostMapping("/delete/courseDeleteProfessor/{courseId}")
+    public String courseDeleteProfessor(@PathVariable Integer courseId,
+                                  @RequestParam Integer professorId
+    ) {
+        Professor professor = professorRepo.getById(professorId);
+        Course course = courseRepo.getById(courseId);
+        professor.getCourses().remove(course);
+        course.getProfessors().remove(professor);
+        professorRepo.save(professor);
+        courseRepo.save(course);
+
+        return "redirect:/delete/courseDeleteProfessor/{courseId}";
     }
 }

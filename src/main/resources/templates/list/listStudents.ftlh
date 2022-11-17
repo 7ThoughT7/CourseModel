@@ -12,6 +12,7 @@
             <th>Имя студента</th>
             <th>Проходит курсы</th>
             <th></th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -26,6 +27,7 @@
                         -
                     </#if></td>
                 <td><a href="/edit/studentEdit/${student.id}">Записаться</a> </td>
+                <td><a href="/delete/studentDelete/${student.id}">Отписаться</a> </td>
             </tr>
         </#list>
         </tbody>

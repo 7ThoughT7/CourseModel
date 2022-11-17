@@ -1,11 +1,14 @@
 package com.example.coursemodel;
 
+import com.example.coursemodel.repos.CourseRepo;
+import com.example.coursemodel.repos.StudentRepo;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 public class Course {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -40,12 +43,14 @@ public class Course {
         this.price = price;
     }
 
-    public void addStudent() {
-
+    public void addStudent(Student student, Course course) {
+        student.setCourses(course);
+        course.setStudents(student);
     }
 
-    public void deleteStudent() {
-
+    public void deleteStudent(Student student, Course course) {
+        student.getCourses().remove(course);
+        course.getStudents().remove(student);
     }
 
     public Set<Professor> getProfessors() {

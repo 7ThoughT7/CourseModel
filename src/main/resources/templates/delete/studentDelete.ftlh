@@ -5,7 +5,7 @@
         <p><a href="/main">НА ГЛАВНУЮ</a></p>
         <p><a href="/list/listStudents">К СПИСКУ СТУДЕНТОВ</a></p>
     </div>
-    Записаться на курс
+    Отписаться от курса
     <p></p>
     <table>
         <thead>
@@ -38,15 +38,15 @@
         </thead>
         <tbody>
         <#list courses as course>
-        <form action="/edit/studentEdit/${student.id}" method="post">
-            <tr>
-                <td>${course.title!}</td>
-                <td>${course.number!}</td>
-                <td>${course.price!}</td>
-                <input type="hidden" value="${course.id!}" name="courseId">
-                <td><button type="submit">Записаться</button></td>
-            </tr>
-        </form>
+            <form action="/delete/studentDelete/${student.id}" method="post">
+                <tr>
+                    <td>${course.title!}</td>
+                    <td>${course.number!}</td>
+                    <td>${course.price!}</td>
+                    <input type="hidden" value="${course.id!}" name="courseId">
+                    <td><button type="submit">Отписаться</button></td>
+                </tr>
+            </form>
         </#list>
         </tbody>
     </table>
