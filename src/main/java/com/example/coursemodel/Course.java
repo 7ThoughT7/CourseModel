@@ -16,9 +16,8 @@ public class Course {
     private int number;
     private float price;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "passingCourseId")
-    private PassingCourse passingCourse;
+    @OneToMany(fetch = FetchType.EAGER)
+    private Set<PassingCourse> passingCourses;
 
     @ManyToMany
     @JoinTable(
@@ -43,14 +42,26 @@ public class Course {
         this.price = price;
     }
 
-    public void addStudent(Student student, Course course) {
+    public void addStudent(Student student, Course course, PassingCourse passingCourse) {
+        student.setPassingCourses(passingCourse);
+        course.setPassingCourse(passingCourse);
         student.setCourses(course);
         course.setStudents(student);
     }
 
-    public void deleteStudent(Student student, Course course) {
+    public void deleteStudent(Student student, Course course, PassingCourse passingCourse) {
+        student.getPassingCourses().remove(passingCourse);
+        course.getPassingCourse().remove(passingCourse);
         student.getCourses().remove(course);
         course.getStudents().remove(student);
+    }
+
+    public Set<PassingCourse> getPassingCourse() {
+        return passingCourses;
+    }
+
+    public void setPassingCourse(PassingCourse passingCourse) {
+        passingCourses.add(passingCourse);
     }
 
     public Set<Professor> getProfessors() {

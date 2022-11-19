@@ -1,9 +1,20 @@
 <#import "../parts/common.ftlh" as c>
 
 <@c.page>
+    <table>
+        <thead>
+        <tr>
+            <th width="150"><a href="/main">НА ГЛАВНУЮ</a></th>
+            <th width="100"></th>
+            <th width="100"><a href="/add/addStudents">Студенты</a></th>
+            <th width="100"><a href="/add/addCourses">Курсы</a></th>
+            <th width="100"><a href="/add/addProfessors">Профессора</a></th>
+        </tr>
+        </thead>
+    </table>
+    <p></p>
     <div>
-        <p><a href="/main">НА ГЛАВНУЮ   </a></p>
-        <p><a href="/list/listCourses">К СПИСКУ КУРСОВ   </a></p>
+        <p><a href="/list/listCourses">К списку курсов</a></p>
     </div>
     Запись студентов на курсы
     <p></p>
@@ -41,8 +52,8 @@
         </tr>
         </thead>
         <tbody>
-        <#list students as student>
-            <form action="/edit/courseEditStudent/${course.id}" method="post">
+        <form action="/edit/courseEditStudent/${course.id}" method="post">
+            <#list students as student>
                 <tr>
                     <td>${student.name!}</td>
                     <td>${student.address!}</td>
@@ -51,8 +62,8 @@
                     <input type="hidden" value="${student.id!}" name="studentId">
                     <td><button type="submit">Записать</button></td>
                 </tr>
-            </form>
-        </#list>
+            </#list>
+        </form>
         </tbody>
     </table>
 </@c.page>

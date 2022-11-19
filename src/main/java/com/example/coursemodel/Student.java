@@ -17,7 +17,6 @@ public class Student {
     private float averagePerform;
 
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "passingCourseId")
     private Set<PassingCourse> passingCourses;
 
     @ManyToMany(mappedBy = "students")
@@ -39,6 +38,14 @@ public class Student {
     }
 
     public void getListOfListedCourses() {}
+
+    public Set<PassingCourse> getPassingCourses() {
+        return passingCourses;
+    }
+
+    public void setPassingCourses(PassingCourse passingCourse) {
+        passingCourses.add(passingCourse);
+    }
 
     public Set<Course> getCourses() {
         return courses;

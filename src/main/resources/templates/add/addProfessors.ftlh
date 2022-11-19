@@ -1,10 +1,17 @@
 <#import "../parts/common.ftlh" as c>
 
 <@c.page>
-    <div>
-        <p><a href="/main">НА ГЛАВНУЮ</a></p>
-    </div>
-
+    <table>
+        <thead>
+        <tr>
+            <th width="150"><a href="/main">НА ГЛАВНУЮ</a></th>
+            <th width="100"></th>
+            <th width="100"><a href="/add/addStudents">Студенты</a></th>
+            <th width="100"><a href="/add/addCourses">Курсы</a></th>
+        </tr>
+        </thead>
+    </table>
+    <p></p>
     <div>
         <form method="post">
             <input type="text" name="name" placeholder="Имя" />
@@ -19,10 +26,10 @@
     <table>
         <thead>
         <tr>
-            <th>Имя</th>
-            <th>Адрес</th>
-            <th>Телефон</th>
-            <th>Оплата</th>
+            <th align="left" width="150">Имя</th>
+            <th align="left" width="150">Адрес</th>
+            <th align="left" width="100">Телефон</th>
+            <th align="left" width="100">Оплата</th>
         </tr>
         </thead>
         <p></p>
@@ -39,4 +46,7 @@
         </#list>
         </tbody>
     </table>
+    <p></p>
+    <p><a href="/list/listProfessors">Редактировать</a></p>
+
 </@c.page>

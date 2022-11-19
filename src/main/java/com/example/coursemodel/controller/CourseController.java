@@ -1,11 +1,15 @@
 package com.example.coursemodel.controller;
 
 import com.example.coursemodel.Course;
+import com.example.coursemodel.PassingCourse;
 import com.example.coursemodel.Professor;
 import com.example.coursemodel.Student;
 import com.example.coursemodel.repos.CourseRepo;
+import com.example.coursemodel.repos.PassingCourseRepo;
 import com.example.coursemodel.repos.ProfessorRepo;
 import com.example.coursemodel.repos.StudentRepo;
+import com.example.coursemodel.service.CourseService;
+import com.example.coursemodel.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
+import java.util.Set;
 
 @Controller
 public class CourseController {
@@ -27,6 +32,15 @@ public class CourseController {
 
     @Autowired
     private ProfessorRepo professorRepo;
+
+    @Autowired
+    private PassingCourseRepo passingCourseRepo;
+
+    @Autowired
+    private StudentService studentService;
+
+    @Autowired
+    private CourseService courseService;
 
     @GetMapping("/add/addCourses")
     public String courses(Map<String, Object> model) {
@@ -64,11 +78,13 @@ public class CourseController {
     public String courseSaveStudent(@PathVariable Integer courseId,
                               @RequestParam Integer studentId
     ) {
-        Student student = studentRepo.getById(studentId);
-        Course course = courseRepo.getById(courseId);
-        course.addStudent(student, course);
-        studentRepo.save(student);
+        Course course = courseService.getById(courseId);
+        Student student = studentService.getById(studentId);
+        PassingCourse passingCourse = new PassingCourse(student, course);
+        course.addStudent(student, course, passingCourse);
+        passingCourseRepo.save(passingCourse);
         courseRepo.save(course);
+        studentRepo.save(student);
 
         return "redirect:/edit/courseEditStudent/{courseId}";
     }
@@ -84,9 +100,19 @@ public class CourseController {
     public String courseDeleteStudent(@PathVariable Integer courseId,
                                 @RequestParam Integer studentId
     ) {
-        Student student = studentRepo.getById(studentId);
-        Course course = courseRepo.getById(courseId);
-        course.deleteStudent(student, course);
+        Student student = studentService.getById(studentId);
+        Course course = courseService.getById(courseId);
+        Iterable<PassingCourse> passingCourses = passingCourseRepo.findAll();
+        PassingCourse passingCourse = null;
+        for (PassingCourse p : passingCourses) {
+            if (p.getStudents() == student && p.getCourses() == course) {
+                passingCourse = p;
+            }
+        }
+        course.deleteStudent(student, course, passingCourse);
+        if (passingCourse != null) {
+            passingCourseRepo.delete(passingCourse);
+        }
         studentRepo.save(student);
         courseRepo.save(course);
 

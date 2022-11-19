@@ -4,7 +4,7 @@ import com.example.coursemodel.Course;
 import com.example.coursemodel.Professor;
 import org.springframework.data.repository.CrudRepository;
 
-public interface ProfessorRepo extends CrudRepository<Professor, Long> {
+public interface ProfessorRepo extends CrudRepository<Professor, Integer> {
 
     Professor getById(Integer professorId);
 }

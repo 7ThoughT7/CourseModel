@@ -5,6 +5,7 @@ import com.example.coursemodel.Professor;
 import com.example.coursemodel.Student;
 import com.example.coursemodel.repos.CourseRepo;
 import com.example.coursemodel.repos.ProfessorRepo;
+import com.example.coursemodel.repos.StudentRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
+import java.util.Set;
 
 @Controller
 public class ProfessorController {
@@ -23,6 +25,9 @@ public class ProfessorController {
 
     @Autowired
     private CourseRepo courseRepo;
+
+    @Autowired
+    private StudentRepo studentRepo;
 
     @GetMapping("/add/addProfessors")
     public String professors(Map<String, Object> model) {
@@ -89,5 +94,37 @@ public class ProfessorController {
         courseRepo.save(course);
 
         return "redirect:/delete/professorDelete/{professorId}";
+    }
+
+    @GetMapping("/evaluateWork/{professorId}")
+    public String evaluateWork(Model model,
+                               @PathVariable Integer professorId
+    ) {
+        model.addAttribute("professor", professorRepo.getById(professorId));
+        model.addAttribute("courses", courseRepo.findAll());
+
+        return "/evaluateWork";
+    }
+
+    @GetMapping("/studentGrades/{courseId}")
+    public String studentGrades(Model model,
+                                @PathVariable Integer courseId
+    ) {
+        model.addAttribute("course", courseRepo.getById(courseId));
+        model.addAttribute("students", studentRepo.findAll());
+
+        return "/studentGrades";
+    }
+
+    @PostMapping("/studentGrades/{studentId}")
+    public String studentGradesPost(@PathVariable Integer studentId,
+                                    @RequestParam Integer courseId,
+                                    @RequestParam Set<Integer> grades
+    ) {
+        Student student = studentRepo.getById(studentId);
+        Course course = courseRepo.getById(courseId);
+
+
+        return "/studentGrades/{studentId}";
     }
 }
