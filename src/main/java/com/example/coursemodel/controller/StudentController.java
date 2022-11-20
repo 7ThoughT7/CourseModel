@@ -87,7 +87,7 @@ public class StudentController {
 
     @GetMapping("/delete/studentDelete/{studentId}")
     public String userDeleteForm(Model model, @PathVariable Integer studentId) {
-        model.addAttribute("student", studentRepo.getById(studentId));
+        model.addAttribute("student", studentService.getById(studentId));
         model.addAttribute("courses", courseRepo.findAll());
         return "delete/studentDelete";
     }
@@ -96,22 +96,21 @@ public class StudentController {
     public String studentDelete(@PathVariable Integer studentId,
                                 @RequestParam Integer courseId
     ) {
-        Student student = studentService.getById(studentId);
-        Course course = courseService.getById(courseId);
-        Iterable<PassingCourse> passingCourses = passingCourseRepo.findAll();
-        PassingCourse passingCourse = null;
-        for (PassingCourse p : passingCourses) {
-            if (p.getStudents() == student && p.getCourses() == course) {
-                passingCourse = p;
-            }
-        }
-        course.deleteStudent(student, course, passingCourse);
-        if (passingCourse != null) {
-            passingCourseRepo.delete(passingCourse);
-        }
-        studentRepo.save(student);
-        courseRepo.save(course);
+        courseService.courseDeleteStudent(studentId, courseId);
 
         return "redirect:/delete/studentDelete/{studentId}";
     }
+
+    @GetMapping("/studyProgress/{studentId}")
+    public String studyProgress(Model model,
+                                @PathVariable Integer studentId
+    ) {
+        model.addAttribute("student", studentService.getById(studentId));
+        model.addAttribute("courses", courseRepo.findAll());
+        model.addAttribute("passingCourses", passingCourseRepo.findAll());
+
+        return "/studyProgress";
+    }
+
+
 }

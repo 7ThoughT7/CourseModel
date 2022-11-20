@@ -37,6 +37,7 @@
                     </#if></td>
                 <td><a href="/edit/studentEdit/${student.id}">Записаться</a> </td>
                 <td><a href="/delete/studentDelete/${student.id}">Отписаться</a> </td>
+                <td><a href="/studyProgress/${student.id}">Успеваемость</a> </td>
             </tr>
         </#list>
         </tbody>

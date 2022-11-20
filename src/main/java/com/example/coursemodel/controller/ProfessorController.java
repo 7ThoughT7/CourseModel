@@ -1,11 +1,14 @@
 package com.example.coursemodel.controller;
 
 import com.example.coursemodel.Course;
+import com.example.coursemodel.PassingCourse;
 import com.example.coursemodel.Professor;
 import com.example.coursemodel.Student;
 import com.example.coursemodel.repos.CourseRepo;
+import com.example.coursemodel.repos.PassingCourseRepo;
 import com.example.coursemodel.repos.ProfessorRepo;
 import com.example.coursemodel.repos.StudentRepo;
+import com.example.coursemodel.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -28,6 +32,12 @@ public class ProfessorController {
 
     @Autowired
     private StudentRepo studentRepo;
+
+    @Autowired
+    private PassingCourseRepo passingCourseRepo;
+
+    @Autowired
+    private CourseService courseService;
 
     @GetMapping("/add/addProfessors")
     public String professors(Map<String, Object> model) {
@@ -116,15 +126,30 @@ public class ProfessorController {
         return "/studentGrades";
     }
 
-    @PostMapping("/studentGrades/{studentId}")
-    public String studentGradesPost(@PathVariable Integer studentId,
-                                    @RequestParam Integer courseId,
-                                    @RequestParam Set<Integer> grades
+    @PostMapping("/studentGrades/{courseId}")
+    public String studentGradesPost(@PathVariable Integer courseId,
+                                    @RequestParam Integer studentId,
+                                    @RequestParam Integer grade1,
+                                    @RequestParam Integer grade2,
+                                    @RequestParam Integer grade3,
+                                    @RequestParam Integer grade4,
+                                    @RequestParam Integer grade5
     ) {
-        Student student = studentRepo.getById(studentId);
-        Course course = courseRepo.getById(courseId);
+//        Student student = studentRepo.getById(studentId);
+//        Course course = courseRepo.getById(courseId);
+//        Iterable<PassingCourse> passingCourses = passingCourseRepo.findAll();
+//        PassingCourse passingCourse = null;
+//        for (PassingCourse p : passingCourses) {
+//            if (p.getStudents() == student && p.getCourses() == course) {
+//                passingCourse = p;
+//            }
+//        }
+        PassingCourse passingCourse = courseService.getPassCourse(studentId, courseId);
+        if (passingCourse != null) {
+            passingCourse.setGrades(grade1, grade2, grade3, grade4, grade5);
+            passingCourseRepo.save(passingCourse);
+        }
 
-
-        return "/studentGrades/{studentId}";
+        return "redirect:/studentGrades/{courseId}";
     }
 }

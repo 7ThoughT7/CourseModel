@@ -100,21 +100,7 @@ public class CourseController {
     public String courseDeleteStudent(@PathVariable Integer courseId,
                                 @RequestParam Integer studentId
     ) {
-        Student student = studentService.getById(studentId);
-        Course course = courseService.getById(courseId);
-        Iterable<PassingCourse> passingCourses = passingCourseRepo.findAll();
-        PassingCourse passingCourse = null;
-        for (PassingCourse p : passingCourses) {
-            if (p.getStudents() == student && p.getCourses() == course) {
-                passingCourse = p;
-            }
-        }
-        course.deleteStudent(student, course, passingCourse);
-        if (passingCourse != null) {
-            passingCourseRepo.delete(passingCourse);
-        }
-        studentRepo.save(student);
-        courseRepo.save(course);
+        courseService.courseDeleteStudent(studentId, courseId);
 
         return "redirect:/delete/courseDeleteStudent/{courseId}";
     }

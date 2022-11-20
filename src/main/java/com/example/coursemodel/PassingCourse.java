@@ -1,6 +1,7 @@
 package com.example.coursemodel;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,8 +18,11 @@ public class PassingCourse {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "courseId")
     private Course courses;
-    private static List<Integer> grades;
+    private static List<Integer> grades = new ArrayList<>();
 
+    private float averageRating;
+
+    private Integer finalScore;
 
     public PassingCourse() {
     }
@@ -58,7 +62,12 @@ public class PassingCourse {
         return grades;
     }
 
-    public void setGrades(List<Integer> grades) {
-        this.grades = grades;
+    public void setGrades(Integer grade1, Integer grade2, Integer grade3, Integer grade4, Integer grade5) {
+        grades.add(grade1);
+        grades.add(grade2);
+        grades.add(grade3);
+        grades.add(grade4);
+        grades.add(grade5);
+
     }
 }

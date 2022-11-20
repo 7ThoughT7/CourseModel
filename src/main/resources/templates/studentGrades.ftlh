@@ -24,23 +24,23 @@
         </thead>
         <tbody>
         <#list students as student>
-            <form action="/studentGrades/${student.id}" method="post">
+<#--            <form action="/studentGrades/${course.id}/${student.id}" method="post">-->
                 <tr>
                     <td>${student.countingNum!}</td>
                     <td>${student.name!}</td>
                     <td>
-                        <form method="post">
-                            <input type="text" name="1" placeholder="Оценка" />
-                            <input type="text" name="1" placeholder="Оценка" />
-                            <input type="text" name="1" placeholder="Оценка" />
-                            <input type="text" name="1" placeholder="Оценка" />
-                            <input type="text" name="1" placeholder="Оценка" />
-                            <input type="hidden" value="${course.id!}" name="courseId">
+                        <form action="/studentGrades/${course.id}" method="post">
+                            <input type="text" name="grade1" placeholder="Оценка" />
+                            <input type="text" name="grade2" placeholder="Оценка" />
+                            <input type="text" name="grade3" placeholder="Оценка" />
+                            <input type="text" name="grade4" placeholder="Оценка" />
+                            <input type="text" name="grade5" placeholder="Оценка" />
+                            <input type="hidden" value="${student.id!}" name="studentId">
                             <button type="submit">Добавить</button>
                         </form>
                     </td>
                 </tr>
-            </form>
+<#--            </form>-->
         </#list>
         </tbody>
     </table>
