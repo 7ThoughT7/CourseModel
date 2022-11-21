@@ -76,7 +76,7 @@ public class ProfessorController {
                               @RequestParam Integer courseId
     ) {
         Professor professor = professorRepo.getById(professorId);
-        Course course = courseRepo.getById(courseId);
+        Course course = courseService.getById(courseId);
         professor.setCourses(course);
         course.setProfessors(professor);
         professorRepo.save(professor);
@@ -97,7 +97,7 @@ public class ProfessorController {
                                @RequestParam Integer courseId
     ) {
         Professor professor = professorRepo.getById(professorId);
-        Course course = courseRepo.getById(courseId);
+        Course course = courseService.getById(courseId);
         professor.getCourses().remove(course);
         course.getProfessors().remove(professor);
         professorRepo.save(professor);
@@ -116,40 +116,4 @@ public class ProfessorController {
         return "/evaluateWork";
     }
 
-    @GetMapping("/studentGrades/{courseId}")
-    public String studentGrades(Model model,
-                                @PathVariable Integer courseId
-    ) {
-        model.addAttribute("course", courseRepo.getById(courseId));
-        model.addAttribute("students", studentRepo.findAll());
-
-        return "/studentGrades";
-    }
-
-    @PostMapping("/studentGrades/{courseId}")
-    public String studentGradesPost(@PathVariable Integer courseId,
-                                    @RequestParam Integer studentId,
-                                    @RequestParam Integer grade1,
-                                    @RequestParam Integer grade2,
-                                    @RequestParam Integer grade3,
-                                    @RequestParam Integer grade4,
-                                    @RequestParam Integer grade5
-    ) {
-//        Student student = studentRepo.getById(studentId);
-//        Course course = courseRepo.getById(courseId);
-//        Iterable<PassingCourse> passingCourses = passingCourseRepo.findAll();
-//        PassingCourse passingCourse = null;
-//        for (PassingCourse p : passingCourses) {
-//            if (p.getStudents() == student && p.getCourses() == course) {
-//                passingCourse = p;
-//            }
-//        }
-        PassingCourse passingCourse = courseService.getPassCourse(studentId, courseId);
-        if (passingCourse != null) {
-            passingCourse.setGrades(grade1, grade2, grade3, grade4, grade5);
-            passingCourseRepo.save(passingCourse);
-        }
-
-        return "redirect:/studentGrades/{courseId}";
-    }
 }

@@ -12,7 +12,7 @@
         </tr>
         </thead>
     </table>
-    <p></p>
+    <p><a href="/list/listProfessors">К списку профессоров</a></p>
     <p>${course.title}</p>
     <table>
         <thead>
@@ -23,24 +23,18 @@
         </tr>
         </thead>
         <tbody>
-        <#list students as student>
-<#--            <form action="/studentGrades/${course.id}/${student.id}" method="post">-->
+        <#list course.getStudents() as student>
                 <tr>
                     <td>${student.countingNum!}</td>
                     <td>${student.name!}</td>
                     <td>
                         <form action="/studentGrades/${course.id}" method="post">
-                            <input type="text" name="grade1" placeholder="Оценка" />
-                            <input type="text" name="grade2" placeholder="Оценка" />
-                            <input type="text" name="grade3" placeholder="Оценка" />
-                            <input type="text" name="grade4" placeholder="Оценка" />
-                            <input type="text" name="grade5" placeholder="Оценка" />
+                            <input type="number" name="grade" placeholder="Оценка" min="1" max="5" autofocus required />
                             <input type="hidden" value="${student.id!}" name="studentId">
                             <button type="submit">Добавить</button>
                         </form>
                     </td>
                 </tr>
-<#--            </form>-->
         </#list>
         </tbody>
     </table>

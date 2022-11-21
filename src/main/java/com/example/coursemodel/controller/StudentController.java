@@ -1,12 +1,14 @@
 package com.example.coursemodel.controller;
 
-import com.example.coursemodel.Course;
+import com.example.coursemodel.Grade;
 import com.example.coursemodel.PassingCourse;
 import com.example.coursemodel.Student;
 import com.example.coursemodel.repos.CourseRepo;
+import com.example.coursemodel.repos.GradeRepo;
 import com.example.coursemodel.repos.PassingCourseRepo;
 import com.example.coursemodel.repos.StudentRepo;
 import com.example.coursemodel.service.CourseService;
+import com.example.coursemodel.service.PassingCourseService;
 import com.example.coursemodel.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,6 +38,12 @@ public class StudentController {
 
     @Autowired
     private CourseService courseService;
+
+    @Autowired
+    private PassingCourseService passingCourseService;
+
+    @Autowired
+    private GradeRepo gradeRepo;
 
     @GetMapping("/add/addStudents")
     public String students(Map<String, Object> model) {
@@ -74,13 +82,7 @@ public class StudentController {
     public String studentSave(@PathVariable Integer studentId,
                               @RequestParam Integer courseId
     ) {
-        Course course = courseService.getById(courseId);
-        Student student = studentService.getById(studentId);
-        PassingCourse passingCourse = new PassingCourse(student, course);
-        course.addStudent(student, course, passingCourse);
-        passingCourseRepo.save(passingCourse);
-        courseRepo.save(course);
-        studentRepo.save(student);
+        courseService.courseAddStudent(studentId, courseId);
 
         return "redirect:/edit/studentEdit/{studentId}";
     }
@@ -101,16 +103,50 @@ public class StudentController {
         return "redirect:/delete/studentDelete/{studentId}";
     }
 
+    @GetMapping("/studentGrades/{courseId}")
+    public String studentGrades(Model model,
+                                @PathVariable Integer courseId
+    ) {
+        model.addAttribute("course", courseService.getById(courseId));
+        model.addAttribute("students", studentRepo.findAll());
+
+        return "/studentGrades";
+    }
+
+    @PostMapping("/studentGrades/{courseId}")
+    public String studentGradesPost(@PathVariable Integer courseId,
+                                    @RequestParam Integer studentId,
+                                    @RequestParam Integer grade
+    ) {
+        PassingCourse passingCourse = passingCourseService.getPassingCourse(studentId, courseId);
+        if (passingCourse != null) {
+            Grade grades = new Grade(passingCourse, grade);
+            passingCourse.setGrades(grades);
+            gradeRepo.save(grades);
+            passingCourseRepo.save(passingCourse);
+        }
+
+        return "redirect:/studentGrades/{courseId}";
+    }
+
     @GetMapping("/studyProgress/{studentId}")
     public String studyProgress(Model model,
                                 @PathVariable Integer studentId
     ) {
         model.addAttribute("student", studentService.getById(studentId));
-        model.addAttribute("courses", courseRepo.findAll());
-        model.addAttribute("passingCourses", passingCourseRepo.findAll());
 
         return "/studyProgress";
     }
 
+    @GetMapping("/grades/{studentId}/{courseId}")
+    public String grades(Model model,
+                         @PathVariable Integer studentId,
+                         @PathVariable Integer courseId
+                         ) {
+        model.addAttribute("student", studentService.getById(studentId));
+        model.addAttribute("course", courseService.getById(courseId));
+        model.addAttribute("passingCourse", passingCourseService.getPassingCourse(studentId, courseId));
 
+        return "/grades";
+    }
 }

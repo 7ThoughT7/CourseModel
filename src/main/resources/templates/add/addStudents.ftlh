@@ -15,11 +15,13 @@
     <p></p>
     <div>
         <form method="post">
-            <input type="text" name="name" placeholder="Имя" />
-            <input type="text" name="address" placeholder="Адрес" />
-            <input type="text" name="telephone" placeholder="Телефон" />
-            <input type="text" name="email" placeholder="Электронная почта" />
-            <input type="text" name="countingNum" placeholder="Номер зачетки">
+            <input type="text" name="name" placeholder="Имя" autofocus required />
+            <input type="text" name="address" placeholder="Адрес" autofocus required />
+            <input type="text" name="telephone" placeholder="Телефон (+71234567891)"
+                   pattern="[\+]\d{1}\d{3}\d{3}\d{2}\d{2}" minlength="12" maxlength="18" autofocus required />
+            <input type="text" name="email" placeholder="Электронная почта"
+                   pattern="\S+@[a-z]+.[a-z]+" autofocus required />
+            <input type="number" name="countingNum" placeholder="Номер зачетки" min="1" autofocus required >
             <button type="submit">Добавить</button>
         </form>
     </div>

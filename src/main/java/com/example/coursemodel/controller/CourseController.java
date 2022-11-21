@@ -69,7 +69,7 @@ public class CourseController {
 
     @GetMapping("edit/courseEditStudent/{courseId}")
     public String courseEditStudent(Model model, @PathVariable Integer courseId) {
-        model.addAttribute("course", courseRepo.getById(courseId));
+        model.addAttribute("course", courseService.getById(courseId));
         model.addAttribute("students", studentRepo.findAll());
         return "edit/courseEditStudent";
     }
@@ -78,20 +78,14 @@ public class CourseController {
     public String courseSaveStudent(@PathVariable Integer courseId,
                               @RequestParam Integer studentId
     ) {
-        Course course = courseService.getById(courseId);
-        Student student = studentService.getById(studentId);
-        PassingCourse passingCourse = new PassingCourse(student, course);
-        course.addStudent(student, course, passingCourse);
-        passingCourseRepo.save(passingCourse);
-        courseRepo.save(course);
-        studentRepo.save(student);
+        courseService.courseAddStudent(studentId, courseId);
 
         return "redirect:/edit/courseEditStudent/{courseId}";
     }
 
     @GetMapping("/delete/courseDeleteStudent/{courseId}")
     public String courseDeleteFormSt(Model model, @PathVariable Integer courseId) {
-        model.addAttribute("course", courseRepo.getById(courseId));
+        model.addAttribute("course", courseService.getById(courseId));
         model.addAttribute("students", studentRepo.findAll());
         return "delete/courseDeleteStudent";
     }
@@ -107,7 +101,7 @@ public class CourseController {
 
     @GetMapping("edit/courseEditProfessor/{courseId}")
     public String courseEditForm(Model model, @PathVariable Integer courseId) {
-        model.addAttribute("course", courseRepo.getById(courseId));
+        model.addAttribute("course", courseService.getById(courseId));
         model.addAttribute("professors", professorRepo.findAll());
         return "edit/courseEditProfessor";
     }
@@ -116,7 +110,7 @@ public class CourseController {
     public String courseSaveProfessor(@PathVariable Integer courseId,
                              @RequestParam Integer professorId
     ) {
-        Course course = courseRepo.getById(courseId);
+        Course course = courseService.getById(courseId);
         Professor professor = professorRepo.getById(professorId);
         course.setProfessors(professor);
         professor.setCourses(course);
@@ -128,7 +122,7 @@ public class CourseController {
 
     @GetMapping("/delete/courseDeleteProfessor/{courseId}")
     public String courseDeleteFormPr(Model model, @PathVariable Integer courseId) {
-        model.addAttribute("course", courseRepo.getById(courseId));
+        model.addAttribute("course", courseService.getById(courseId));
         model.addAttribute("professors", professorRepo.findAll());
         return "delete/courseDeleteProfessor";
     }
@@ -138,7 +132,7 @@ public class CourseController {
                                   @RequestParam Integer professorId
     ) {
         Professor professor = professorRepo.getById(professorId);
-        Course course = courseRepo.getById(courseId);
+        Course course = courseService.getById(courseId);
         professor.getCourses().remove(course);
         course.getProfessors().remove(professor);
         professorRepo.save(professor);

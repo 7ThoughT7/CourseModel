@@ -14,9 +14,9 @@
     <p></p>
     <div>
         <form method="post">
-            <input type="text" name="title" placeholder="Название" />
-            <input type="text" name="number" placeholder="Номер" />
-            <input type="text" name="price" placeholder="Стоимость">
+            <input type="text" name="title" placeholder="Название" autofocus required />
+            <input type="number" name="number" placeholder="Номер" autofocus required />
+            <input type="text" name="price" placeholder="Стоимость" autofocus required >
             <button type="submit">Добавить</button>
         </form>
     </div>

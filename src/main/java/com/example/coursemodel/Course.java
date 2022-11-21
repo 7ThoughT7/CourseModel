@@ -56,6 +56,19 @@ public class Course {
         course.getStudents().remove(student);
     }
 
+    public float averagePerformanceOnCourse() {
+
+        float result = 0;
+        for (PassingCourse p : passingCourses) {
+            result += p.getCurrentAverageScore();
+        }
+        return result;
+    }
+
+    public Integer amountStudents() {
+        return students.size();
+    }
+
     public Set<PassingCourse> getPassingCourse() {
         return passingCourses;
     }

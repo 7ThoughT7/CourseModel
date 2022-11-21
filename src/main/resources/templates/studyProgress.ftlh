@@ -12,31 +12,30 @@
         </tr>
         </thead>
     </table>
-    <p></p>
-    ${student.name!}
-    <p></p>
+    <p><a href="/list/listStudents">К списку студентов</a></p>
+
+    <p>${student.name!}</p>
     <table>
         <thead>
         <tr>
             <th>Название курса</th>
-            <th>Оценки</th>
+            <th></th>
 <#--            <th>Средний балл</th>-->
 <#--            <th>Финальная отметка</th>-->
         </tr>
         </thead>
         <tbody>
-        <#list courses as course>
+        <#list student.getCourses() as course>
             <tr>
                 <td>${course.title!}</td>
-                <td><#list student.passingCourses as passingCourse>
-                        <#if student == passingCourse.getStudents() && course == passingCourse.getCourses()>
-                            <#list passingCourse.grades as grade>
-                                ${grade}<#sep>,
-                            </#list>
-                        </#if>
-                    </#list>
+                <td>
+<#--                    <form action="/grades/${student.id}" method="post">-->
+<#--                        <input type="hidden" value="${course.id!}" name="courseId">-->
+<#--                        <button type="submit">Оценки</button>-->
+<#--                    </form>-->
+                    <a href="/grades/${student.id}/${course.id}">Оценки</a>
                 </td>
-<#--                <td><a href="/edit/studentEdit/${student.id}">Записаться</a> </td>-->
+<#--                <td> </td>-->
 <#--                <td><a href="/delete/studentDelete/${student.id}">Отписаться</a> </td>-->
 <#--                <td><a href="/delete/studentDelete/${student.id}">Отписаться</a> </td>-->
             </tr>
@@ -44,3 +43,12 @@
         </tbody>
     </table>
 </@c.page>
+
+<#--<#list student.passingCourses as passingCourse>-->
+<#--    <#if student.id == passingCourse.students.getId()-->
+<#--    && course.id == passingCourse.courses.getId()>-->
+<#--        <#list passingCourse.grades as grade>-->
+<#--            ${grade}<#sep>,-->
+<#--        </#list>-->
+<#--    </#if>-->
+<#--</#list>-->

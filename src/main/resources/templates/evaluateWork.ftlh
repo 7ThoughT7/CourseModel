@@ -17,23 +17,42 @@
         <p><a href="/list/listProfessors">К списку профессоров</a></p>
     </div>
     <p></p>
-    ${professor.name}
+
+    <table>
+        <thead>
+        <tr>
+            <th>Профессор</th>
+            <th>Общее количество студентов</th>
+            <th>Средняя успеваемость</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>${professor.name}</td>
+            <td>${professor.totalNumberOfStudents()}</td>
+            <td>${professor.averagePerformance()!}</td>
+        </tr>
+        </tbody>
+    </table>
+
     <p></p>
     Оценить работы студентов
     <table>
         <thead>
         <tr>
             <th>Номер</th>
-            <th>Название</th>
+            <th>Название курса</th>
+            <th>Количество студентов</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
-        <#list courses as course>
+        <#list professor.getCourses() as course>
             <form action="/evaluateWork/${professor.id}" method="post">
                 <tr>
                     <td>${course.number!}</td>
                     <td>${course.title!}</td>
+                    <td>${course.amountStudents()}</td>
                     <td><a href="/studentGrades/${course.id}">Оценить</a></td>
                 </tr>
             </form>

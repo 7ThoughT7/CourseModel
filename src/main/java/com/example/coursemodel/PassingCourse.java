@@ -1,8 +1,9 @@
 package com.example.coursemodel;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
+
+import static java.lang.Math.round;
 
 @Entity
 public class PassingCourse {
@@ -18,11 +19,9 @@ public class PassingCourse {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "courseId")
     private Course courses;
-    private static List<Integer> grades = new ArrayList<>();
 
-    private float averageRating;
-
-    private Integer finalScore;
+    @OneToMany(fetch = FetchType.EAGER)
+    private Set<Grade> grades;
 
     public PassingCourse() {
     }
@@ -32,14 +31,31 @@ public class PassingCourse {
         this.courses = course;
     }
 
-    public Integer getPassingCourseId() {
-        return Id;
+    public float getCurrentAverageScore() {
+
+        float result = 0;
+        for (Grade g : grades) {
+            if (g.getGrade() != null) {
+                result += g.getGrade();
+            }
+        }
+        return result / grades.size();
     }
 
-    public void getCurrentAverageScore() {}
+    public Integer getFinalGrade() {
 
-    public void getFinalGrade() {
+        return round(getCurrentAverageScore());
+    }
+    public Set<Grade> getGrades() {
+        return grades;
+    }
 
+    public void setGrades(Grade grade) {
+        grades.add(grade);
+    }
+
+    public Integer getPassingCourseId() {
+        return Id;
     }
 
     public Student getStudents() {
@@ -56,18 +72,5 @@ public class PassingCourse {
 
     public void setCourses(Course course) {
         this.courses = course;
-    }
-
-    public List<Integer> getGrades() {
-        return grades;
-    }
-
-    public void setGrades(Integer grade1, Integer grade2, Integer grade3, Integer grade4, Integer grade5) {
-        grades.add(grade1);
-        grades.add(grade2);
-        grades.add(grade3);
-        grades.add(grade4);
-        grades.add(grade5);
-
     }
 }

@@ -29,7 +29,7 @@
         <tr>
             <td>${course.title}</td>
             <td><#if course.students??>
-                    <#list course.students as student>
+                    <#list course.getStudents() as student>
                         ${student.toString()!}<#sep>,
                     </#list>
                 <#else>
@@ -52,8 +52,9 @@
         </tr>
         </thead>
         <tbody>
-        <form action="/edit/courseEditStudent/${course.id}" method="post">
+
             <#list students as student>
+            <form action="/edit/courseEditStudent/${course.id}" method="post">
                 <tr>
                     <td>${student.name!}</td>
                     <td>${student.address!}</td>
@@ -62,8 +63,8 @@
                     <input type="hidden" value="${student.id!}" name="studentId">
                     <td><button type="submit">Записать</button></td>
                 </tr>
+            </form>
             </#list>
-        </form>
         </tbody>
     </table>
 </@c.page>

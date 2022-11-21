@@ -26,7 +26,8 @@ public class CourseService {
     @Autowired
     private StudentService studentService;
 
-
+    @Autowired
+    private PassingCourseService passingCourseService;
 
     public Course getById(Integer courseId) {
 
@@ -39,28 +40,25 @@ public class CourseService {
         return null;
     }
 
-    public PassingCourse getPassCourse(Integer studentId, Integer courseId) {
-
-        Student student = studentRepo.getById(studentId);
-        Course course = courseRepo.getById(courseId);
-        Iterable<PassingCourse> passingCourses = passingCourseRepo.findAll();
-        for (PassingCourse p : passingCourses) {
-            if (p.getStudents() == student && p.getCourses() == course) {
-                return p;
-            }
-        }
-        return null;
-    }
-
     public void courseDeleteStudent(Integer studentId, Integer courseId) {
         Student student = studentService.getById(studentId);
         Course course = getById(courseId);
-        PassingCourse passingCourse = getPassCourse(studentId, courseId);
+        PassingCourse passingCourse = passingCourseService.getPassingCourse(studentId, courseId);
         course.deleteStudent(student, course, passingCourse);
         if (passingCourse != null) {
             passingCourseRepo.delete(passingCourse);
         }
         studentRepo.save(student);
         courseRepo.save(course);
+    }
+
+    public void courseAddStudent(Integer studentId, Integer courseId) {
+        Course course = getById(courseId);
+        Student student = studentService.getById(studentId);
+        PassingCourse passingCourse = new PassingCourse(student, course);
+        course.addStudent(student, course, passingCourse);
+        passingCourseRepo.save(passingCourse);
+        courseRepo.save(course);
+        studentRepo.save(student);
     }
 }

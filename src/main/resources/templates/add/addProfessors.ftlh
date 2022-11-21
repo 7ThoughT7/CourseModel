@@ -14,10 +14,11 @@
     <p></p>
     <div>
         <form method="post">
-            <input type="text" name="name" placeholder="Имя" />
-            <input type="text" name="address" placeholder="Адрес" />
-            <input type="text" name="telephone" placeholder="Телефон" />
-            <input type="text" name="payment" placeholder="Оплата">
+            <input type="text" name="name" placeholder="Имя" autofocus required />
+            <input type="text" name="address" placeholder="Адрес" autofocus required />
+            <input type="text" name="telephone" placeholder="Телефон (+71234567891)"
+                   pattern="[\+]\d{1}\d{3}\d{3}\d{2}\d{2}" minlength="12" maxlength="18" autofocus required />
+            <input type="text" name="payment" placeholder="Оплата" autofocus required >
             <button type="submit">Добавить</button>
         </form>
     </div>

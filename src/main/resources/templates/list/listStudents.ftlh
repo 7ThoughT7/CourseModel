@@ -29,7 +29,7 @@
             <tr>
                 <td>${student.name!}</td>
                 <td><#if student.courses??>
-                        <#list student.courses as course>
+                        <#list student.getCourses() as course>
                             ${course.toString()!}<#sep>,
                         </#list>
                     <#else>

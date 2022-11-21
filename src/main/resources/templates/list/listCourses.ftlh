@@ -32,14 +32,14 @@
             <tr>
                 <td>${course.title!}</td>
                 <td><#if course.professors??>
-                        <#list course.professors as professor>
+                        <#list course.getProfessors() as professor>
                             ${professor.toString()!}<#sep>,
                         </#list>
                     <#else>
                         -
                     </#if></td>
                 <td><#if course.students??>
-                        <#list course.students as student>
+                        <#list course.getStudents() as student>
                             ${student.toString()!}<#sep>,
                         </#list>
                     <#else>
