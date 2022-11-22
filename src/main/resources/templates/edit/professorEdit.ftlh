@@ -47,7 +47,7 @@
         </tr>
         </thead>
         <tbody>
-        <#list courses as course>
+        <#list professor.signUpCourse(courses) as course>
             <form action="/edit/professorEdit/${professor.id}" method="post">
                 <tr>
                     <td>${course.title!}</td>

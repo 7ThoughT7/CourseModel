@@ -18,6 +18,7 @@
     </div>
     <p></p>
 
+    <div id="tableWrap">
     <table>
         <thead>
         <tr>
@@ -34,7 +35,8 @@
         </tr>
         </tbody>
     </table>
-
+    <button onclick="ExportToExcel('xlsx')">Экспорт в excel</button>
+    </div>
     <p></p>
     Оценить работы студентов
     <table>
@@ -59,28 +61,15 @@
         </#list>
         </tbody>
     </table>
-<#--    <p></p>-->
-<#--    <table>-->
-<#--        <thead>-->
-<#--        <tr>-->
-<#--            <th>Название</th>-->
-<#--            <th>Номер</th>-->
-<#--            <th>Цена</th>-->
-<#--            <th></th>-->
-<#--        </tr>-->
-<#--        </thead>-->
-<#--        <tbody>-->
-<#--        <#list courses as course>-->
-<#--            <form action="/edit/professorEdit/${professor.id}" method="post">-->
-<#--                <tr>-->
-<#--                    <td>${course.title!}</td>-->
-<#--                    <td>${course.number!}</td>-->
-<#--                    <td>${course.price!}</td>-->
-<#--                    <input type="hidden" value="${course.id!}" name="courseId">-->
-<#--                    <td><button type="submit">Взять курс</button></td>-->
-<#--                </tr>-->
-<#--            </form>-->
-<#--        </#list>-->
-<#--        </tbody>-->
-<#--    </table>-->
+
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+    <script>
+        function ExportToExcel(type, fn, dl) {
+            var elt = document.getElementById('tableWrap');
+            var wb = XLSX.utils.table_to_book(elt, {sheet: "sheet1"});
+            return dl ?
+                XLSX.write(wb, {bookType: type, bookSST: true, type: 'base64'}) :
+                XLSX.writeFile(wb, fn || ('MySheetName.' + (type || 'xlsx')));
+        }
+    </script>
 </@c.page>

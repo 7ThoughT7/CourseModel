@@ -5,6 +5,7 @@ import com.example.coursemodel.repos.StudentRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -42,6 +43,36 @@ public class Course {
         this.price = price;
     }
 
+    public Iterable<Professor> signUpProfessor(Iterable<Professor> allProfessor) {
+        Set<Professor> signUpProfessor = new LinkedHashSet<>();
+        if (allProfessor != null) {
+            for (Professor c : allProfessor) {
+                if (!professors.contains(c)) {
+                    signUpProfessor.add(c);
+                }
+            }
+        }
+        return signUpProfessor;
+    }
+
+    public Set<Professor> getListOfListedProfessors() {
+        return getProfessors();
+    }
+    public Iterable<Student> signUpStudent(Iterable<Student> allStudent) {
+        Set<Student> signUpStudent = new LinkedHashSet<>();
+        if (allStudent != null) {
+            for (Student c : allStudent) {
+                if (!students.contains(c)) {
+                    signUpStudent.add(c);
+                }
+            }
+        }
+        return signUpStudent;
+    }
+
+    public Set<Student> getListOfListedStudents() {
+        return getStudents();
+    }
     public void addStudent(Student student, Course course, PassingCourse passingCourse) {
         student.setPassingCourses(passingCourse);
         course.setPassingCourse(passingCourse);

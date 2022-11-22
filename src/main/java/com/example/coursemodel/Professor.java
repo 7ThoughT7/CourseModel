@@ -4,6 +4,7 @@ import com.example.coursemodel.service.PassingCourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -32,6 +33,21 @@ public class Professor {
         this.payment = payment;
     }
 
+    public Iterable<Course> signUpCourse(Iterable<Course> allCourses) {
+        Set<Course> signUpCourse = new LinkedHashSet<>();
+        if (allCourses != null) {
+            for (Course c : allCourses) {
+                if (!courses.contains(c)) {
+                    signUpCourse.add(c);
+                }
+            }
+        }
+        return signUpCourse;
+    }
+
+    public Set<Course> getListOfListedCourses() {
+        return getCourses();
+    }
     public Integer totalNumberOfStudents() {
 
         int result = 0;

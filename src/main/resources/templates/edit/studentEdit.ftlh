@@ -48,7 +48,7 @@
         </tr>
         </thead>
         <tbody>
-        <#list courses as course>
+        <#list student.maybeSignUp(courses) as course>
         <form action="/edit/studentEdit/${student.id}" method="post">
             <tr>
                 <td>${course.title!}</td>

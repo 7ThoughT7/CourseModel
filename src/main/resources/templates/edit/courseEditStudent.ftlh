@@ -53,7 +53,7 @@
         </thead>
         <tbody>
 
-            <#list students as student>
+            <#list course.signUpStudent(students) as student>
             <form action="/edit/courseEditStudent/${course.id}" method="post">
                 <tr>
                     <td>${student.name!}</td>

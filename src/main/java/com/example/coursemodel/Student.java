@@ -1,6 +1,7 @@
 package com.example.coursemodel;
 
 import javax.persistence.*;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -33,11 +34,21 @@ public class Student {
         this.countingNum = countingNum;
     }
 
-    public void maybeSignUp() {
-
+    public Iterable<Course> maybeSignUp(Iterable<Course> allCourses) {
+        Set<Course> maybeSignUpCourse = new LinkedHashSet<>();
+        if (allCourses != null) {
+            for (Course c : allCourses) {
+                if (!courses.contains(c)) {
+                    maybeSignUpCourse.add(c);
+                }
+            }
+        }
+        return maybeSignUpCourse;
     }
 
-    public void getListOfListedCourses() {}
+    public Set<Course> getListOfListedCourses() {
+        return getCourses();
+    }
 
     public Set<PassingCourse> getPassingCourses() {
         return passingCourses;

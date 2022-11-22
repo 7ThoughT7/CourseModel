@@ -73,7 +73,7 @@ public class StudentController {
 
     @GetMapping("edit/studentEdit/{studentId}")
     public String userEditForm(Model model, @PathVariable Integer studentId) {
-        model.addAttribute("student", studentRepo.getById(studentId));
+        model.addAttribute("student", studentService.getById(studentId));
         model.addAttribute("courses", courseRepo.findAll());
         return "edit/studentEdit";
     }

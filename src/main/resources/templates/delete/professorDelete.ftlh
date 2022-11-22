@@ -47,7 +47,7 @@
         </tr>
         </thead>
         <tbody>
-        <#list courses as course>
+        <#list professor.getListOfListedCourses() as course>
             <form action="/delete/professorDelete/${professor.id}" method="post">
                 <tr>
                     <td>${course.title!}</td>

@@ -52,7 +52,7 @@
         </tr>
         </thead>
         <tbody>
-        <#list students as student>
+        <#list course.getListOfListedStudents() as student>
             <form action="/delete/courseDeleteStudent/${course.id}" method="post">
                 <tr>
                     <td>${student.name!}</td>
