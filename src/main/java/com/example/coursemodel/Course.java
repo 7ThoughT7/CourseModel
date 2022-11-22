@@ -1,9 +1,5 @@
 package com.example.coursemodel;
 
-import com.example.coursemodel.repos.CourseRepo;
-import com.example.coursemodel.repos.StudentRepo;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.persistence.*;
 import java.util.LinkedHashSet;
 import java.util.Set;

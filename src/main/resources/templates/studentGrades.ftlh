@@ -24,17 +24,17 @@
         </thead>
         <tbody>
         <#list course.getStudents() as student>
-                <tr>
-                    <td>${student.countingNum!}</td>
-                    <td>${student.name!}</td>
-                    <td>
-                        <form action="/studentGrades/${course.id}" method="post">
-                            <input type="number" name="grade" placeholder="Оценка" min="1" max="5" autofocus required />
-                            <input type="hidden" value="${student.id!}" name="studentId">
-                            <button type="submit">Добавить</button>
-                        </form>
-                    </td>
-                </tr>
+            <tr>
+                <td>${student.countingNum!}</td>
+                <td>${student.name!}</td>
+                <td>
+                    <form action="/studentGrades/${course.id}" method="post">
+                        <input type="number" name="grade" placeholder="Оценка" min="1" max="5" autofocus required />
+                        <input type="hidden" value="${student.id!}" name="studentId">
+                        <button type="submit">Добавить</button>
+                    </form>
+                </td>
+            </tr>
         </#list>
         </tbody>
     </table>

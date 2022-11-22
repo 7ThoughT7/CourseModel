@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Map;
 
 @Controller
-//@RequestMapping("/main")
 public class StudentController {
 
     @Autowired

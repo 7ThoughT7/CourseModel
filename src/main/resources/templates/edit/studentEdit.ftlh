@@ -49,15 +49,15 @@
         </thead>
         <tbody>
         <#list student.maybeSignUp(courses) as course>
-        <form action="/edit/studentEdit/${student.id}" method="post">
-            <tr>
-                <td>${course.title!}</td>
-                <td>${course.number!}</td>
-                <td>${course.price!}</td>
-                <input type="hidden" value="${course.id!}" name="courseId">
-                <td><button type="submit">Записаться</button></td>
-            </tr>
-        </form>
+            <form action="/edit/studentEdit/${student.id}" method="post">
+                <tr>
+                    <td>${course.title!}</td>
+                    <td>${course.number!}</td>
+                    <td>${course.price!}</td>
+                    <input type="hidden" value="${course.id!}" name="courseId">
+                    <td><button type="submit">Записаться</button></td>
+                </tr>
+            </form>
         </#list>
         </tbody>
     </table>

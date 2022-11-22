@@ -20,8 +20,6 @@
         <tr>
             <th>Название курса</th>
             <th></th>
-<#--            <th>Средний балл</th>-->
-<#--            <th>Финальная отметка</th>-->
         </tr>
         </thead>
         <tbody>
@@ -29,26 +27,10 @@
             <tr>
                 <td>${course.title!}</td>
                 <td>
-<#--                    <form action="/grades/${student.id}" method="post">-->
-<#--                        <input type="hidden" value="${course.id!}" name="courseId">-->
-<#--                        <button type="submit">Оценки</button>-->
-<#--                    </form>-->
                     <a href="/grades/${student.id}/${course.id}">Оценки</a>
                 </td>
-<#--                <td> </td>-->
-<#--                <td><a href="/delete/studentDelete/${student.id}">Отписаться</a> </td>-->
-<#--                <td><a href="/delete/studentDelete/${student.id}">Отписаться</a> </td>-->
             </tr>
         </#list>
         </tbody>
     </table>
 </@c.page>
-
-<#--<#list student.passingCourses as passingCourse>-->
-<#--    <#if student.id == passingCourse.students.getId()-->
-<#--    && course.id == passingCourse.courses.getId()>-->
-<#--        <#list passingCourse.grades as grade>-->
-<#--            ${grade}<#sep>,-->
-<#--        </#list>-->
-<#--    </#if>-->
-<#--</#list>-->

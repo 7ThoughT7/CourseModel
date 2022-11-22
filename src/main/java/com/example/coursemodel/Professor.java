@@ -1,11 +1,7 @@
 package com.example.coursemodel;
 
-import com.example.coursemodel.service.PassingCourseService;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.persistence.*;
 import java.util.LinkedHashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity

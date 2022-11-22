@@ -1,9 +1,7 @@
 package com.example.coursemodel.controller;
 
 import com.example.coursemodel.Course;
-import com.example.coursemodel.PassingCourse;
 import com.example.coursemodel.Professor;
-import com.example.coursemodel.Student;
 import com.example.coursemodel.repos.CourseRepo;
 import com.example.coursemodel.repos.PassingCourseRepo;
 import com.example.coursemodel.repos.ProfessorRepo;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
-import java.util.Set;
 
 @Controller
 public class CourseController {

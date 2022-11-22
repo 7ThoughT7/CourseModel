@@ -14,8 +14,4 @@
         </thead>
     </table>
 
-
-<#--    <p><a href="/add/addStudents">Студенты</a></p>-->
-<#--    <p><a href="/add/addCourses">Курсы</a></p>-->
-<#--    <p><a href="/add/addProfessors">Профессора</a></p>-->
 </@c.page>

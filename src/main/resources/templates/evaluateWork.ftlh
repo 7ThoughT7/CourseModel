@@ -19,23 +19,23 @@
     <p></p>
 
     <div id="tableWrap">
-    <table>
-        <thead>
-        <tr>
-            <th>Профессор</th>
-            <th>Общее количество студентов</th>
-            <th>Средняя успеваемость</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>${professor.name}</td>
-            <td>${professor.totalNumberOfStudents()}</td>
-            <td>${professor.averagePerformance()!}</td>
-        </tr>
-        </tbody>
-    </table>
-    <button onclick="ExportToExcel('xlsx')">Экспорт в excel</button>
+        <table>
+            <thead>
+            <tr>
+                <th>Профессор</th>
+                <th>Общее количество студентов</th>
+                <th>Средняя успеваемость</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>${professor.name}</td>
+                <td>${professor.totalNumberOfStudents()}</td>
+                <td>${professor.averagePerformance()!}</td>
+            </tr>
+            </tbody>
+        </table>
+        <button onclick="ExportToExcel('xlsx')">Экспорт в excel</button>
     </div>
     <p></p>
     Оценить работы студентов
